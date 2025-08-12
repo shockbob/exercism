@@ -1,0 +1,8 @@
+: acronym \ s -- s
+   s:uc 
+   /[^A-Z']/ " " 
+   s:replace!  
+   " " s:/ 
+   ( 0 1 s:slice ) a:map 
+   "" a:join
+;
