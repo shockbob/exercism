@@ -1,0 +1,87 @@
+: numbers-equal?
+   number? rot 
+   number? rot 
+   and if 
+     n:= 
+   else 
+     2drop false 
+   then 
+; 
+
+: find-dups
+    a:new 
+    swap 
+    repeat 
+       a:pop
+       dup
+       rot
+       -1 a:@ 
+       rot swap
+       numbers-equal? not if 
+          break
+       then
+       -rot a:push swap 
+    again
+;
+
+: make-new-rle \ s - s 
+      s:len 1 n:> if           
+         s:len >s swap 0 s:@ nip
+         s:+
+      then    
+;
+
+: encode \ s -- s
+      null s:/
+      ( 0 s:@ nip ) 
+      a:map
+      a:new swap 
+      repeat 
+        find-dups 
+        -rot a:push swap 
+        a:len 0 n:= if 
+           break 
+        then 
+      again 
+      drop
+      a:rev
+     ( ( "" swap s:+ ) a:map "" a:join make-new-rle ) a:map "" a:join
+;
+
+: is-digit? '0 '9 between ;
+ 
+: find-next-rle
+    "" s:new  
+    swap 
+    repeat  
+       a:shift
+       dup
+       is-digit? if
+          rot swap 
+             s:+ 
+          swap
+       else 
+          rot swap
+          a:new a:push a:push 
+          break
+       then
+    again
+;
+ 
+: decode 
+   s:len 0 = if ;then
+   null s:/ ( 0 s:@ nip ) a:map
+   a:new swap
+   repeat
+      find-next-rle
+      a:open
+      >n
+      number? not if drop 1 then
+      swap "" swap s:+ swap s:*
+      rot 
+      a:push 
+      swap
+      a:len 0 = if drop break then
+   again 
+   "" a:join
+;
