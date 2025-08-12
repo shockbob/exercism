@@ -1,0 +1,22 @@
+ needs rand/range
+
+: round-down
+    dup 0 n:< if -0.5 n:+ n:trunc else n:trunc then
+;
+: modifier \ n -- n
+   10 n:- 2 n:/ round-down
+;
+
+: ability \ -- n
+     ( drop 1 6 rand-range ) 1 4 a:generate
+     ( n:cmp ) a:sort  0 a:- ( n:+ ) 0 a:reduce
+;
+
+ ["strength", "dexterity",  "intelligence", "constitution", 
+ "wisdom","charisma", "constitution"] constant characters
+ 
+: character \ -- m
+    characters ( ability m:! ) m:new a:reduce
+   "constitution" m:@
+   "hitpoints" swap modifier 10 n:+ m:!
+;
