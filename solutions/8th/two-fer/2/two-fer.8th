@@ -1,0 +1,11 @@
+: two-fer \ ? -- s
+     null? if 
+        drop "you" 
+     else
+        dup "" s:= if 
+           drop "you" 
+        then
+     then
+     "One for %s, one for me." s:strfmt    
+;
+
