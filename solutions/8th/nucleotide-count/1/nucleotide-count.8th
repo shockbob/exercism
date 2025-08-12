@@ -1,0 +1,11 @@
+
+
+: nucleotide-counts  \ s -- m
+   dup 
+   /[GACT]/ "" s:replace! s:len 0 n:= not 
+   if 2drop null ;then
+   drop
+   null s:/ ( ) a:group ( a:len 2nip ) m:map  
+   {"T":0,"G":0,"C":0,"A":0} swap m:+ 
+;
+
