@@ -1,0 +1,27 @@
+
+locals:
+
+: sieve-one 2dup  "prime" a:! 
+    a:len  nip swap dup dup n:+  
+    rot 
+    (  rot swap "comp"  a:! swap dup step )  -rot loop  
+    drop  ;  
+
+: primes \ n -- a
+    >r a:new ( "unknown" a:push ) r@ n:1+ times
+    0 "n/a" a:!
+    1 "n/a" a:!
+    repeat
+       "unknown" ( s:= ) a:indexof  null? if
+           drop
+           break
+       else
+          sieve-one
+       then
+    again 
+    a:new swap ( "prime" s:= if a:push else drop then ) a:each
+    drop
+;
+
+
+      
