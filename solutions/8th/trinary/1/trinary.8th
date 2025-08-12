@@ -1,0 +1,12 @@
+
+: valid /[012]/ "" s:replace! "" s:= ;
+: trinary> \ s -- n
+   dup valid if 
+       null s:/ ( >n ) a:map
+       0 swap ( swap  3 n:*  n:+ ) 0 a:reduce
+       nip
+   else 
+      drop
+      0
+   then
+;
