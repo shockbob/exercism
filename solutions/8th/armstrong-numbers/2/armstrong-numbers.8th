@@ -1,0 +1,11 @@
+
+: armstrong? \ n -- T
+    dup
+    >s
+    s:len
+    >r
+    null s:/
+    ( >n r@ n:^ ) a:map
+    ( n:+ ) 0 a:reduce 
+    n:=
+;
