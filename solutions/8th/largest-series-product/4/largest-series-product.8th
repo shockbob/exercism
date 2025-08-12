@@ -1,0 +1,14 @@
+: any-nulls? 
+    ( null? nip ) a:filter a:len 0 n:= not nip
+;
+: largest-product \ s n -- n
+    dup 0 n:=     if 2drop 1 ;then
+    dup 0 n:<     if 2drop null ;then
+    over "" s:=   if 2drop null ;then
+    swap
+    null s:/ ( >n ) a:map
+    dup any-nulls? if nip drop null ;then 
+    a:len 0 n:= if 2drop 1 ;then
+    ( ( n:* ) 1 a:reduce ) rot 1  a:map+ 
+    ( n:max ) over 0 a:_@ a:reduce
+;
