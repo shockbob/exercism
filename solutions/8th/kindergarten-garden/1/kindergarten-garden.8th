@@ -1,0 +1,12 @@
+
+["Alice","Bob","Charlie","David","Eve","Fred","Ginny",
+"Harriet","Ileana","Joseph","Kincaid","Larry"] constant students
+
+{"G":"grass","C":"clover","R":"radishes","V":"violets"} constant names
+
+: get-plants \ s n - a
+      >r "\n" s:/  ( r@ 2 s:slice ) a:map "" 
+      a:join null s:/ ( names swap m:@ nip ) a:map rdrop ;
+: plants \ s s - a
+     students swap ( s:= ) a:indexof nip 2 n:* get-plants
+;
