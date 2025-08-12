@@ -1,0 +1,35 @@
+: eq3 dup rot n:= -rot n:= and ;
+: anyzeros 0 n:= swap 0 n:= rot 0 n:= or or ;
+: abcmp n:+ n:< ;
+: tricmp 
+     3dup abcmp if 
+       rot 3dup abcmp if 
+          rot abcmp 
+       else 
+          3drop false then 
+     else 
+         3drop false then ;
+
+: valid 3dup tricmp if anyzeros not else 3drop false then ;
+
+: equilateral? \ n n n -- T
+    3dup valid if eq3 else 3drop false then ;
+: top2eq n:= nip ;
+: next2eq rot top2eq ;
+: bot2eq -rot top2eq ;
+: any2eq 
+   3dup top2eq if 3drop true ;then
+   3dup next2eq if 3drop true ;then
+   bot2eq  ;
+: isosceles? \ n n n -- T
+   3dup valid if any2eq else 3drop false then ;
+   
+: scalene? \ n n n -- T
+   3dup valid if 
+                 isosceles? 
+                 not
+            else 
+               3drop false 
+            then ;
+
+
