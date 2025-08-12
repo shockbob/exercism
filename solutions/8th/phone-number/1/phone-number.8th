@@ -1,0 +1,8 @@
+: clean \ s -- s
+    dup /[A-Za-z]/ "" s:replace! over s:= not if drop null ;then
+    /[^0-9]/ "" s:replace!
+    /^1/ "" s:replace!
+    s:len 10 = not if drop null ;then
+    0 s:@ '2 < if drop null ;then
+    3 s:@ '2 < if drop null ;then
+;
