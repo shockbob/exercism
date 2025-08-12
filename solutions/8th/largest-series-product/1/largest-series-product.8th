@@ -1,0 +1,29 @@
+: any-nulls? 
+    ( null? nip ) a:filter a:len 0 n:= not nip
+;
+: zero? \ n -- T
+    0 n:=
+;
+: empty? \ s -- T
+   "" s:=
+;
+: error1? \ s n -- T
+    zero? swap empty? and
+; 
+: error2? \ s n -- T
+    zero? swap empty? not and
+; 
+: error3?
+    zero? not swap empty? and
+;
+: largest-product \ s n -- n
+    2dup error1? if 2drop 1 ;then
+    2dup error2? if 2drop 1 ;then
+    2dup error3? if 2drop null ;then
+    dup 0 n:> not if 2drop null ;then
+    swap
+    null s:/ ( >n ) a:map
+    dup any-nulls? if nip drop null ;then 
+    a:len 0 n:= if 2drop 1 ;then
+    ( ( n:* ) 1 a:reduce ) rot 1  a:map+ ( n:cmp ) a:sort -1 a:@ nip
+;
