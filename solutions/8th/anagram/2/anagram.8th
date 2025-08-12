@@ -1,0 +1,13 @@
+: to-array-sorted
+     null s:/ ( s:cmp ) a:qsort 
+;
+
+: ana-match \ s1 s2 -- T
+     s:lc swap s:lc
+     2dup s:= if 2drop false ;then
+     to-array-sorted swap to-array-sorted ( s:= ) a:= 2nip
+;
+: anagrams \ s a -- a
+    swap s:lc swap 
+    ( over ana-match ) a:filter nip
+;
