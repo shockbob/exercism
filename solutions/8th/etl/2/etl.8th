@@ -1,0 +1,6 @@
+: transform \ m -- m 
+    (  swap >n >r m:new swap  
+         ( s:lc r@  m:! ) a:each! drop ) m:each 
+    m:len nip a:close
+    ( m:+ ) m:new a:reduce
+;

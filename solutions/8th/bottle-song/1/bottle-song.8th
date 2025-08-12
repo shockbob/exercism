@@ -1,0 +1,27 @@
+[ "no","one","two","three","four","five","six","seven","eight","nine","ten"] constant names
+: bottle
+     "one" s:= if "bottle" else "bottles" then
+;
+: capitalize 
+     1 s:/ a:open swap s:uc swap s:+ 
+;
+: bottle-names
+    names swap a:_@ dup bottle swap 
+;
+: first 
+   bottle-names capitalize "%s green %s hanging on the wall,\n" s:strfmt dup s:+
+;
+
+: two 
+    bottle-names 
+    "And if one green bottle should accidentally fall,\nThere'll be %s green %s hanging on the wall." 
+    s:strfmt 
+;
+
+: both
+   dup first swap n:1- two s:+
+; 
+
+: recite \ n n -- s
+    2dup n:- n:1+ nip swap  ( ) -rot a:generate a:rev ( both ) a:map "\n\n" a:join
+;

@@ -1,0 +1,12 @@
+
+locals:
+: armstrong? \ n -- T
+    dup
+    >s
+    s:len
+    "pow" w:!
+    null s:/
+    ( >n "pow" w:@ n:^ ) a:map
+    ( n:+ ) 0 a:reduce 
+    n:=
+;

@@ -1,0 +1,35 @@
+
+: lower-case-array \ -- a
+      ( ) 97 122 a:generate
+;
+: generate-encoder \  -- m
+     lower-case-array lower-case-array a:rev m:zip
+     ( dup m:! ) 48 57 loop
+;
+
+generate-encoder constant encoder 
+
+: remove-non-alphanumerics \ s -- s
+     /[^A-Za-z0-9]/ "" s:replace
+;
+
+: split-string  \ s -- s
+   [5] s:/ " " a:join 
+;
+
+: encode-string
+    remove-non-alphanumerics 
+    encoder swap (  m:@  )  s:map nip
+;
+
+
+\ encode TO a cipher
+: >atbash \ s -- s
+   s:lc encode-string split-string
+;
+
+\ decode FROM a cipher
+: atbash> \ s -- s
+    " " "" s:replace
+    encode-string
+;

@@ -1,0 +1,23 @@
+[["n/a","n/a"],
+["house", "Jack built"],
+["malt", "lay in"],
+ ["rat","ate"],
+ ["cat", "killed"],
+ ["dog","worried"],
+ ["cow with the crumpled horn","tossed"],
+ ["maiden all forlorn","milked"],
+ ["man all tattered and torn","kissed"],
+ ["priest all shaven and shorn","married"],
+ ["rooster that crowed in the morn","woke"],
+ ["farmer sowing his corn","kept"],
+ ["horse and the hound and the horn","belonged to"]] constant poem-parts
+
+: verse 
+   ( ) 1 rot a:generate a:rev
+   ( poem-parts swap  a:@  a:open swap  " the %s that %s" s:strfmt nip ) a:map 
+   "" a:join "This is%s." s:strfmt
+;
+
+: recite \ n n -- a
+    ( ) -rot a:generate ( verse ) a:map 
+;

@@ -1,0 +1,21 @@
+
+{-1:"deficient",0:"perfect",1:"abundant"} constant eval
+
+: factors >r a:new 1 a:push  
+   ( dup r@ swap n:mod 0 n:= if a:push else drop then ) 
+   2 r@ 1 n:- loop 
+;
+
+
+: classify \ n -- s
+   dup 1 n:= if
+       drop
+       eval -1 m:@ nip
+   else
+      dup 0 n:> if
+         dup factors ( n:+ ) 0 a:reduce swap n:cmp eval swap m:@ nip
+      else 
+         drop
+         null
+      then
+   then ;

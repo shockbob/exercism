@@ -1,0 +1,32 @@
+: length \ a -- n
+    ( drop  n:1+ ) 0 a:reduce 
+;
+
+: append \ a a -- a
+    ( a:push ) rot a:reduce
+;
+
+: concat \ a -- a
+    ( array? !if a:push else a:+ then ) a:new a:reduce
+;
+
+: filter \ a w -- a
+   >r ( dup r@ w:exec if a:push else drop then ) a:new a:reduce
+;
+
+: map \ a w -- a
+   >r ( r@ w:exec a:push ) a:new a:reduce
+;
+
+: reverse \ a -- a
+    ( a:slide ) a:new a:reduce
+;
+
+: foldl \ a x w -- x'
+   swap a:reduce 
+;
+
+: foldr \ a x w -- x'
+   rot a:rev 
+   -rot swap a:reduce
+;

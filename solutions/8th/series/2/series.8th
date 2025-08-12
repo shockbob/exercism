@@ -1,0 +1,19 @@
+: sliceme \ s n -- a
+    >r  s:len 
+    ( over -rot r@ s:slice ) 
+    swap 0 swap a:generate nip rdrop
+;
+: filter-slices \ a n -- a
+     >r 
+     ( null? not nip ) a:filter 
+     ( s:len r@ n:= nip ) a:filter rdrop
+;
+
+: slices \  s n -- a 
+    >r
+    s:len 0 =    if drop [] ;then
+    r@ 0 n:> not if drop [] ;then
+    s:len r@ n:< if drop [] ;then
+    r@ sliceme  
+    r@ filter-slices
+;

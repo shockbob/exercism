@@ -1,0 +1,14 @@
+ : evenly-divides 
+     n:mod 0 n:= ;
+
+: leap-year? \
+    dup 
+    4 evenly-divides if
+       dup 100 evenly-divides if
+           400 evenly-divides
+       then
+    else
+       drop
+       false
+    then
+;

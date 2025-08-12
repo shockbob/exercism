@@ -1,0 +1,28 @@
+needs python/any
+ "XXX" constant stop
+ {"AUG":"Methionine",
+   "UUU":"Phenylalanine","UUC":"Phenylalanine",
+   "UUA":"Leucine","UUG":"Leucine",
+   "UCU":"Serine","UCC":"Serine","UCA":"Serine","UCG":"Serine",
+   "UAU":"Tyrosine","UAC":"Tyrosine",
+   "UGU":"Cysteine","UGC":"Cysteine",
+   "UGG":"Tryptophan",
+   "UAA":"XXX","UAG":"XXX","UGA":"XXX"
+   } constant codon-map
+
+: >proteins \ s -- a
+   s:len 0 n:= if drop [] ;then
+   [3] s:/ ( codon-map swap m:@ nip ) a:map
+   "XXX" ( swap null? if 2drop false else  s:= then ) a:indexof number? if 
+       0 swap a:slice
+   else
+      drop
+   then
+   dup
+   ( null? nip ) a:filter a:len 0 n:= not if 
+      2drop
+      null
+  else 
+     drop
+  then
+;

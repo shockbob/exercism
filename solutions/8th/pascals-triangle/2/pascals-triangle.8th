@@ -1,0 +1,12 @@
+: next-row 
+    ( a:open n:+ ) 2 1 a:map+
+    1 a:slide 1 a:push
+;
+
+: rows \ n -- a
+   dup 0 = if drop a:new ;then
+   n:1- >r 
+   a:new 1 a:push
+   ( over nip clone next-row nip ) 1 r@ loop
+   r@ n:1+ a:close
+;

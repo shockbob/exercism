@@ -1,0 +1,16 @@
+: gen \ n -- a
+   ( ) 1 rot 1 n:- a:generate 
+   array? not if 
+      drop [] 
+   then ;
+
+: divs \ n n -- a
+    swap gen ( over n:mod 0 n:= ) a:filter nip ;
+
+: sum \ a n -- n
+     >r  ( r@ swap divs ) a:map
+     ( a:+ ) a:new a:reduce 
+     ( n:cmp ) a:sort 
+     ( n:= ) a:uniq 
+     ( n:+ ) 0 a:reduce
+;

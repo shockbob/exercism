@@ -1,0 +1,63 @@
+
+: get-at-row-col \ a a -- a n
+    a:open -rot a:@ null? 
+    if 
+       drop nip null 
+    else  
+      rot a:_@ 
+    then
+; 
+
+: set-at-row-col \ a a n -- a
+    >r a:open -rot a:@  rot r@ a:! drop rdrop
+; 
+
+: make-2d-matrix \ n -- a
+    >r ( drop 0 ) 1 r@ a:generate 
+    ( clone ) r@ n:1- times r@ a:close rdrop
+;
+
+: move \ a a -- a
+    ( n:+ ) a:2map
+;
+
+: valid? \ a a -- T
+     get-at-row-col null? 
+     if 
+       2drop false 
+     else 
+       0 n:= nip 
+     then  
+;
+
+: turn-right \ a -- a
+    a:open swap n:neg 2 a:close ;
+
+: spiral-rec  \  direction array location index -- a
+    >r
+     2dup get-at-row-col 
+     0 n:= if 
+        drop 2dup r@ set-at-row-col 
+        drop rot 2dup move 
+        3 pick over valid? 
+        if 
+           rot drop rot swap r@ n:1+ recurse 
+        else 
+           drop turn-right 2dup move rot drop rot swap r@ n:1+ recurse 
+        then  \ put index at location try to move in same direction if not zero turn right and move in that direction
+     else \ return array
+        nip 2nip
+     then
+     rdrop   
+; 
+
+: spiral-matrix \ n -- a
+    dup 0 n:= if drop [] ;then
+    dup 1 n:= if drop [[1]] ;then
+    >r
+    [0,1]
+    r@ make-2d-matrix
+    [0,0]
+    1
+    spiral-rec
+;

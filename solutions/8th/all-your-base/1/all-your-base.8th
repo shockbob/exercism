@@ -1,0 +1,22 @@
+: inrange  \ a n -- a T
+   n:1- >r dup ( 0 r@ n:between not ) a:filter a:_len 0 n:=
+;
+: convert \ a n n - a
+    >r dup 0 n:= if drop a:rev ;then
+    r@
+    n:/mod
+    -rot
+    a:push swap
+    r@
+    rdrop
+    recurse
+;
+: rebase \ n a n -- a
+     dup 1 n:> not if 2nip nip null ;then
+     rot dup 1 n:> not if 2nip nip null ;then
+     rot over  inrange not if 2nip drop  null ;then
+     -rot
+     >r swap ( swap r@ n:* n:+ ) 0 a:reduce 
+     a:new -rot swap convert 
+     a:len 0 n:= if drop a:new 0 a:push ;then
+;

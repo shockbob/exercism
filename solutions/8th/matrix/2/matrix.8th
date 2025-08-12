@@ -1,0 +1,10 @@
+: extract \ s -- a
+   "\n" s:/ ( " " s:/ ( >n ) a:map ) a:map 
+;
+: row \ s n -- a
+   >r extract  r@ n:1-  a:_@ rdrop
+;
+
+: column \ s n -- a
+   n:1- >r extract  ( r@ a:_@ ) a:map rdrop
+;

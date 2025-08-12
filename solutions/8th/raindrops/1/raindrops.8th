@@ -1,0 +1,17 @@
+: divisible-by n:mod 0 n:= ;
+
+: raindrops
+   dup >s
+   swap dup 3 divisible-by if "Pling" else "" then
+   swap
+   dup 5 divisible-by if "Plang" else "" then 
+   swap
+   7 divisible-by if "Plong" else "" then
+   s:+ s:+ 
+   s:len 0 n:= if 
+      drop 
+    else 
+      nip 
+    then
+   ;
+   

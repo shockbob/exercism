@@ -1,0 +1,13 @@
+
+
+["black","brown","red","orange","yellow","green","blue","violet","grey","white"] constant allcolors
+allcolors ( ) 0 9 a:generate m:zip constant colormap
+var code
+: color-code \ s -- n
+  code !
+  colormap code @ m:@ nip
+;
+var list
+: colors \ -- a
+    allcolors
+;

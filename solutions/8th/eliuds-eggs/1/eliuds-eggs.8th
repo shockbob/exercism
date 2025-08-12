@@ -1,0 +1,17 @@
+: eggCount  \ n -- n
+  dup 0 n:= if
+    0
+    nip
+  else          
+    0 swap
+    repeat 
+      dup 0 n:= if
+        drop
+        break
+      else
+        2 n:/mod 
+        rot rot n:+ swap  
+      then
+    again
+  then
+;

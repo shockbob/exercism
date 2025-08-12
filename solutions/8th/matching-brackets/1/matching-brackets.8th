@@ -1,0 +1,25 @@
+
+: replace-brackets \ s -- s T
+    dup
+     /\[\]|\(\)|\{\}/ "" s:replace! 
+    swap
+    over
+    s:= 
+;
+
+: paired? \ s -- T
+    /[^\{\}\[\]\(\)]/ "" s:replace!
+    repeat
+       s:len 0 n:= if 
+          drop 
+          true  
+          break  
+       else 
+          replace-brackets if 
+               drop 
+               false 
+               break 
+          then 
+      then
+    again
+;

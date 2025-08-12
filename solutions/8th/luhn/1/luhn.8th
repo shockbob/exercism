@@ -1,0 +1,32 @@
+: doub dup n:+ dup 9 n:> if 9 n:- then ;
+: valid? \ s -- T 
+    " " "" s:replace!
+    s:len 1 n:> if 
+       /[0-9]/ "" s:replace! s:len 0 n:> if 
+          drop false 
+       else 
+          drop true 
+       then 
+    else 
+       drop false 
+   then 
+;
+: ch>num \ c -- n 
+    '0 n:- 
+;  
+: str>luhndigs \ s -- a
+   s:rev 
+   a:new swap ( swap n:odd? not if  ch>num a:push else ch>num doub a:push then )  s:each
+;
+
+: luhn \ s -- T  
+    dup valid? if  
+       /[^0-9]/ "" s:replace!
+       str>luhndigs
+       ( n:+ ) 0 a:reduce
+       10 n:mod 0 =
+  else
+     drop
+     false
+  then ;
+       

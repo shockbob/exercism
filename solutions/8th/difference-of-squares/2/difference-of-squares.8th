@@ -1,0 +1,15 @@
+: gen >r ( ) 1 r@ a:generate ;
+
+: square-of-sum \ n -- n
+    gen
+   ( n:+ ) 0 a:reduce  dup n:* 
+;
+
+: sum-of-squares \ n -- n
+   gen
+   ( dup n:* ) a:map ( n:+ ) 0 a:reduce 
+;
+
+: difference-of-squares \ n -- n
+     dup sum-of-squares swap square-of-sum swap n:-
+;

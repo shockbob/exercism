@@ -1,0 +1,14 @@
+: distance \ s1 s2 -- n
+     s:len rot s:len rot
+     n:= 
+     if 
+        null s:/ 
+        swap
+        null s:/ 
+        ( s:= ) a:2map 
+        false a:remove 
+        nip
+     else 
+        2drop null
+     then
+;

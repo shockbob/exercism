@@ -1,0 +1,9 @@
+"GCTA" constant input
+"CGAU" constant output
+input null s:/ ( 0 s:@ nip ) a:map constant input-chars
+output null s:/ ( 0 s:@ nip ) a:map constant output-chars
+input-chars output-chars m:zip constant dna-map
+
+: >rna \ s -- s
+   ( dna-map swap m:@ nip ) s:map
+;

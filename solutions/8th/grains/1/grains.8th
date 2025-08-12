@@ -1,0 +1,8 @@
+: square \ n -- n
+    dup 1 64 n:between not if drop null ;then
+    1 n:- 2 swap n:^
+;
+
+: total \ -- n
+    ( ) 1 64 a:generate ( square n:+ ) 0 a:reduce
+;

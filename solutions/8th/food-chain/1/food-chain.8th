@@ -1,0 +1,58 @@
+"I don't know why she swallowed the fly. Perhaps she'll die." constant end-end
+[
+{"animal": "fly","end": "I don't know why she swallowed the fly. Perhaps she'll die." },
+   {"animal": "spider","end": "It wriggled and jiggled and tickled inside her.",
+        "special": " that wriggled and jiggled and tickled inside her."},
+   {"animal": "bird","end": "How absurd"},
+   {"animal": "cat","end": "Imagine that,"},
+   {"animal": "dog","end": "What a hog,"},
+   {"animal": "goat","end": "Just opened her throat and swallowed a goat!"},
+   {"animal": "cow","end": "I don't know how she swallowed a cow!"}  ,
+   {"animal": "horse","end": "She's dead, of course!"}] constant animals
+
+animals a:_len n:1- constant last-animal
+
+: animal animals swap a:_@ "animal" m:_@ ;
+
+: end animals swap a:_@ "end" m:_@ 
+
+;
+46 constant period
+33 constant bang
+
+: full-end \ n -- s
+    dup end -1 s:@ dup bang n:= swap period n:= or if nip else 
+    swap animal swap "%s to swallow a %s!" s:strfmt then  ; 
+
+: special \ n -- s
+    >r animals r@ a:_@ "special" "." m:_@? rdrop ;
+
+: start \ n -- s
+   >r r@ full-end r@ animal "I know an old lady who swallowed a %s." s:strfmt a:new a:push a:push rdrop
+;
+: inside \ n -- s
+     n:1- >r r@ special r@ animal r@ n:1+ animal
+    "She swallowed the %s to catch the %s%s" s:strfmt rdrop
+;
+
+: last-part \ n -- s
+     >r 0 r@ n:= if a:new else ( ) 1 r@ a:generate a:rev ( inside ) a:map then rdrop ;
+
+: last-or-first 
+     >r r@ last-animal n:= r@ 0 n:= or rdrop ;
+
+: smart-middle
+    >r r@ last-or-first if a:new else r@ last-part then rdrop
+;
+: smart-final
+    >r r@ last-or-first if a:new else end-end a:new a:push then rdrop 
+;
+: full-verse 
+     >r r@ start r@ smart-middle r@ smart-final a:new a:+ a:+ a:+
+;
+: presquash \ 
+   >r r@ a:len 1 n:> if (  "" a:push ) a:map -1 a:@ a:pop 2drop then 
+;
+: recite 
+    n:1- swap n:1- swap ( ) -rot a:generate ( full-verse ) a:map presquash a:squash
+;

@@ -1,0 +1,16 @@
+["eggs","peanuts","shellfish","strawberries","tomatoes",
+  "chocolate","pollen","cats" ] constant allergens
+[1,2,4,8,16,32,64,128] constant bitvals
+allergens bitvals m:zip constant allergy-map
+
+: bitset \ n n -- n 
+   n:/mod n:odd? nip 
+;
+
+: allergic-to? \ n s -- T
+   allergy-map swap m:@ nip bitset
+;
+
+: list \ n -- a 
+ >r  allergens ( r@ swap allergic-to? ) a:filter
+;

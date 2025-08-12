@@ -1,0 +1,4 @@
+: square-root \ n -- n
+   dup  ( ) swap 1 swap a:generate
+   ( dup n:* over n:= ) a:filter 0 a:@ .s 2nip
+;

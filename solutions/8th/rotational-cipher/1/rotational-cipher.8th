@@ -1,0 +1,12 @@
+
+: upper-case? 'A 'Z n:between ;
+: lower-case? 'a 'z n:between ;
+
+: rotate-ch \ c n -- c
+    swap dup upper-case? if 'A n:- n:+ 26 n:mod 'A n:+ .s ;then 
+    dup lower-case? if 'a n:- n:+ 26 n:mod 'a n:+ .s ;then 
+    nip
+;
+: rotate \ s n -- s
+     >r ( r@ rotate-ch ) s:map 
+;
