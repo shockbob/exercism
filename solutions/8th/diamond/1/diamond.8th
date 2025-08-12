@@ -1,0 +1,22 @@
+: pad-to-width \ n s -- s
+     s:len rot swap n:- 2 n:/ " " swap s:* dup rot s:+ swap s:+ 
+;  
+: row-spacing  \ c -- n
+    'B n:- 2 n:* n:1+
+;
+: row-inner \ c -- s
+  dup 'A n:= if "A" nip ;then
+  dup row-spacing " " swap s:* 
+  over swap over  "%c%s%c" s:strfmt nip 
+;
+: row-total \ n c - s    
+   row-inner pad-to-width
+;
+: letter-array \ n n -- a
+    ( ) -rot a:generate
+;
+: rows \ s -- a
+    0 s:@ dup 'A n:= if 2drop a:new "A" a:push ;then
+    dup row-spacing 2 n:+ >r  'A swap letter-array
+    (  r@ swap row-total ) a:map clone a:pop drop a:rev a:+ nip
+;
