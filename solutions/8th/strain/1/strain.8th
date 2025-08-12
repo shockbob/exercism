@@ -1,0 +1,9 @@
+: keep \ a w -- a
+   >r 
+  ( dup r@ w:exec if array? !if swap then a:push else drop then )
+  a:new a:reduce 
+;
+
+: discard \ a w -- a
+   >r ( dup r@ w:exec !if array? !if swap then a:push else drop then ) a:new a:reduce     
+;
