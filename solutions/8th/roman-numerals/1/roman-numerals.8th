@@ -1,0 +1,14 @@
+["","I","II","III","IV","V","VI","VII","VIII","IX"] constant numbers
+{73:"IXCM",86:"VLD",88:"XCM"} constant digit-map
+
+: build-power-array \ n -- a
+      n:1- ( ) 0 rot a:generate a:rev ; 
+: build-dig \ n s -- s 
+     ( digit-map swap m:@ nip over s:@ nip ) s:map nip ;
+: n:>roman  \ n -- s
+     >s null s:/ ( >n ) a:map 
+     ( numbers swap a:@ nip )  a:map 
+     a:len build-power-array swap ( build-dig )   a:2map 
+     "" a:join
+;
+
