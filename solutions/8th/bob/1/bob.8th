@@ -1,0 +1,44 @@
+: only-letters 
+    /[^A-Za-z]/ "" s:replace! ;
+
+      
+: empty?
+     s:trim s:len 0 = nip ;
+     
+: all-caps?
+    only-letters
+    dup empty? if 
+       drop
+       false
+    else
+       /[A-Z]/ "" s:replace! s:len 0 = nip 
+    then ;
+    
+: question?
+      s:trim s:len 0 = if
+         false nip 
+      else 
+         -1 1 s:slice "?" = 
+      then ;
+
+     
+: bob \ s -- s
+     dup question? if
+         dup all-caps? if 
+             "Calm down, I know what I'm doing!"
+         else
+             "Sure."
+         then
+     else
+        dup all-caps? if 
+              "Whoa, chill out!"
+        else 
+          dup empty? if 
+            "Fine. Be that way!"
+          else 
+            "Whatever."
+          then
+       then
+    then
+    nip
+;
