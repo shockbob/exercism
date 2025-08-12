@@ -1,0 +1,13 @@
+
+{"black":0,"brown":1,"red":2,"orange":3,"yellow":4,"green":5,"blue":6,"violet":7,"grey":8,"white":9} constant colormap
+
+: color-code \ s -- n
+  colormap swap m:@ swap drop
+;
+
+: value \ a -- n
+   0 a:@
+   swap 1 a:@
+   nip
+   color-code swap color-code 10 * + 
+;
