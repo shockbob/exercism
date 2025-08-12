@@ -1,0 +1,11 @@
+: strip-bad /^'/ "" s:replace 
+            /'$/ "" s:replace ; 
+
+: to-words s:lc /[, \n:!!&@$%^&.]/ s:/ 
+    ( "" s:= not ) a:filter 
+    ( strip-bad ) a:map ;
+
+: word-count \ s -- m
+    to-words
+    ( ) a:group 
+    ( a:len nip nip ) m:map ;
