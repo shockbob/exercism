@@ -1,0 +1,23 @@
+: inrange 0 7 n:between ; 
+
+: create \ n n -- x
+     2dup inrange swap inrange and if swap a:new a:push a:push ;then
+     2drop null
+;
+
+: 2pop \ a -- x x
+     a:pop swap a:pop nip 
+;
+
+: horz-or-vert? \ x x -- T
+     ( n:= ) a:2map 2pop or 
+;
+
+: same-diag? \ x x -- T
+    ( n:- n:abs ) a:2map 2pop n:= 
+;
+
+: can-attack? \ x x -- T
+   2dup horz-or-vert? if 2drop true ;then
+   same-diag?
+;
