@@ -1,0 +1,28 @@
+
+locals:
+: sieve-one 
+    "step" w:!
+    "array" w:!
+    "array" w:@ "step" w:@  "prime"  a:!
+    ( "array" w:@ swap "comp" a:!  "step" w:@ step drop ) 
+    "step" w:@ dup n:+ "array" w:@ a:len nip loop
+    ;
+
+: primes \ n -- a
+    >r a:new ( "unknown" a:push ) r@ n:1+ times
+    0 "n/a" a:!
+    1 "n/a" a:!
+    repeat
+       "unknown" ( s:= ) a:indexof  null? if
+           drop
+           break
+       else
+          sieve-one
+       then
+    again 
+    a:new swap ( "prime" s:= if a:push else drop then ) a:each
+    drop
+;
+
+
+      
