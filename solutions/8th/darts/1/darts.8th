@@ -1,0 +1,18 @@
+: darts-score \ n n -- n
+    dup n:* swap dup n:* +
+    "1" . .s
+    dup 100 n:> if 
+       0
+       else
+       dup 25 n:> if
+          1
+       else
+          dup 1 n:> if
+             5
+             else
+               10
+             then
+        then
+    then
+    nip       
+;
