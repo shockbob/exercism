@@ -1,0 +1,78 @@
+["zzz","ones","twos","threes","fours","fives","sixes"] constant nums
+
+: add-vals  \ m - n 
+    m:vals a:squash 
+    ( n:+ ) 0 a:reduce nip
+;
+
+: score \ m n - n
+   swap ( a:_len nip over  n:= )   m:filter  add-vals
+;
+
+: build-groups \ a - m a
+    ( ) a:group m:vals ( a:_len  ) a:map ( n:cmp ) a:sort
+;
+: little-straight?  \ a - T
+     ( n:cmp ) a:sort [1,2,3,4,5] ( n:= ) a:= 2nip ;
+: big-straight?  \ a - T
+     ( n:cmp )  a:sort [2,3,4,5,6] ( n:= )  a:= 2nip ;
+: yacht? \ a - T
+     build-groups nip a:len 1 n:= nip
+; 
+: full-house-score \ a -- T
+     build-groups 
+     [2,3] ( n:= ) a:= if 
+        2drop 
+        add-vals
+     else 
+        drop
+        2drop 0 
+     then
+;
+: four-of-a-kind-score \ a -- n
+    build-groups 
+    [1,4] ( n:= ) a:= if
+       2drop 4 score nip
+    ;then
+    drop
+    [5] ( n:= ) a:= if 
+       2drop 5 score 4 n:* 5 n:/  nip    
+    else
+      2drop drop 0 
+    then 
+;
+
+: play_yacht \ a s -- n
+             \ array-of-roll
+             \   scoring-method
+             \        score  
+   dup nums swap ( s:= ) a:indexof nip null?  if 
+     drop
+     dup "yacht" s:= if 
+        drop 
+        yacht? if 50  else 0  ;then
+     ;then
+      dup "little straight" s:= if 
+        drop 
+        little-straight? if 30  else 0  ;then
+     ;then
+      dup "big straight" s:= if 
+        drop 
+        big-straight? if 30  else 0  ;then
+     ;then
+     dup "four of a kind" s:= if 
+        drop 
+        four-of-a-kind-score
+     ;then   
+     dup "full house" s:= if   
+        drop 
+        full-house-score   
+     ;then 
+     dup "choice" s:= if 
+        drop
+        ( n:+ ) 0 a:reduce
+     ;then
+   else
+     nip >r ( r@ n:= ) a:filter a:len r@ n:* nip     
+   then
+;
