@@ -1,0 +1,25 @@
+: onestep 
+    dup 2 n:mod 0 n:= if 
+        2 n:/ 
+    else
+        3 n:* 1 +
+    then
+;
+
+: collatz \ n -- n
+  dup 0 n:> not if 
+       drop null 
+  else
+    0 >r
+    repeat 
+       dup 1 n:= if 
+          break 
+       else
+          onestep
+          1 r+
+      then
+    again 
+    drop
+    r@
+  then
+;
